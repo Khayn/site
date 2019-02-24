@@ -2,7 +2,7 @@ package pl.failmasters.site;
 
 public enum Columns {
 
-	NAME("name"), SURENAME("surename"), EMAIL("email"), PASSWORD("password");
+	ID("id"), NAME("name"), SURENAME("surename"), EMAIL("email"), PASSWORD("password");
 
 	private String dbColumnName;
 
