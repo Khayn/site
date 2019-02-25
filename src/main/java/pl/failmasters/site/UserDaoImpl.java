@@ -158,7 +158,6 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 			props.load(inputStream);
-			System.out.println("<< got props: " + props);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
