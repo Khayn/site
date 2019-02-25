@@ -1,0 +1,12 @@
+CREATE TABLE users (
+     id MEDIUMINT NOT NULL AUTO_INCREMENT,
+     name CHAR(30) NOT NULL,
+     surename CHAR(30) NOT NULL,
+     login CHAR(30) NOT NULL,
+     email CHAR(30) NOT NULL,
+     password CHAR(30) NOT NULL,
+     PRIMARY KEY (id)
+);
+
+ALTER TABLE users
+ADD UNIQUE (login);
