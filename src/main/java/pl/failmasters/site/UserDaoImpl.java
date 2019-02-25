@@ -1,18 +1,23 @@
 package pl.failmasters.site;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public class UserDaoImpl implements UserDao {
 
+	private final ConnectionData data = getConnectionData();
+
 	@Override
 	public User getUser(final String login) {
 		String query = "SELECT * FROM users WHERE login=?";
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
@@ -33,7 +38,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByLoginAndPassword(String login, String pass) {
 		String query = "SELECT * FROM users WHERE login=? AND password=?";
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
@@ -55,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public Set<User> getAllUsers() {
 		String query = "SELECT * FROM users ORDER BY id";
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		Set<User> users = new HashSet<>();
 
@@ -75,7 +80,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean insertUser(User user) {
 		String query = "INSERT INTO users (name, surename, login, email, password) VALUES (?, ?, ?, ?, ?)";
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
@@ -102,7 +107,7 @@ public class UserDaoImpl implements UserDao {
 	public boolean updateUser(User user) {
 		String query = "UPDATE users SET name=?, surename=?, email=?, password=? WHERE login=?";
 
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
@@ -128,7 +133,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean deleteUser(String login) {
 		String query = "DELETE FROM users WHERE login=?";
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = ConnectionFactory.getConnection(data);
 
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
@@ -147,4 +152,20 @@ public class UserDaoImpl implements UserDao {
 		return false;
 	}
 
+	private ConnectionData getConnectionData() {
+		InputStream inputStream = getClass().getResourceAsStream("db.properties");
+		Properties props = new Properties();
+
+		try {
+			props.load(inputStream);
+			System.out.println("<< got props: " + props);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new ConnectionData(props);
+
+	}
 }
