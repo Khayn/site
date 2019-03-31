@@ -15,9 +15,8 @@ public class ProductDtoTest {
 
 	@Test
 	public void testDto() {
-
+		// given + when + then
 		assertNotNull(new ProductDto());
-
 		assertThat(ProductDto.class, allOf(hasValidBeanConstructor(), hasValidBeanEquals(), hasValidGettersAndSetters(),
 				hasValidBeanHashCode(), hasValidBeanToString()));
 	}

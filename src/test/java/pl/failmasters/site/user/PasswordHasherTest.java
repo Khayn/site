@@ -7,8 +7,10 @@ public class PasswordHasherTest {
 
 	@Test
 	public void shouldReturnCorrectHash() {
+		// given + when
 		PasswordHasher hasher = new PasswordHasher("password123");
 
+		// then
 		org.hamcrest.MatcherAssert.assertThat(hasher.hash(), IsEqualIgnoringCase
 				.equalToIgnoringCase("EF92B778BAFE771E89245B89ECBC08A44A4E166C06659911881F383D4473E94F"));
 

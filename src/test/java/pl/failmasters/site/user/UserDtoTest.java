@@ -15,9 +15,8 @@ public class UserDtoTest {
 
 	@Test
 	public void testDto() {
-
+		// given + when + then
 		assertNotNull(new UserDto());
-
 		assertThat(UserDto.class, allOf(hasValidBeanConstructor(), hasValidBeanEquals(), hasValidGettersAndSetters(),
 				hasValidBeanHashCode(), hasValidBeanToString()));
 	}

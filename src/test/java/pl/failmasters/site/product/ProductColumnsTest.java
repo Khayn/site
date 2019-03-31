@@ -8,6 +8,7 @@ public class ProductColumnsTest {
 
 	@Test
 	public void testEnum() {
+		// given + when + then
 		Stream.of(ProductColumns.values()).forEach(c -> c.getDbColumnName());
 	}
 }
