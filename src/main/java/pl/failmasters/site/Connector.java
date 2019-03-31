@@ -1,5 +1,8 @@
 package pl.failmasters.site;
 
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +20,11 @@ public class Connector {
 		/**
 		 * those are basically integration tests and form of a use case
 		 */
+		StopWatch watch = new StopWatch();
+		watch.start();
+		LOGGER.info("<< Started running.");
+		LOGGER.info("");
+
 		LOGGER.info("---- USERS ----");
 		UserDao userDao = new UserDao();
 		LOGGER.info("all users: {}", userDao.getAll());
@@ -54,6 +62,9 @@ public class Connector {
 		productDao.delete("odkurzacz SSACZ-200 XL");
 		LOGGER.info("all products after delete: {}", productDao.getAll());
 
+		watch.stop();
+		LOGGER.info("");
+		LOGGER.info("<< Finished in {} ms.", watch.getTime(TimeUnit.MILLISECONDS));
 	}
 
 }
