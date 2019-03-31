@@ -50,4 +50,5 @@ public class ConnectionData {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

@@ -1,30 +1,74 @@
 package pl.failmasters.site.dao;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.failmasters.site.Connector;
 import pl.failmasters.site.connection.ConnectionData;
 import pl.failmasters.site.connection.ConnectionFactory;
+import pl.failmasters.site.user.PasswordHasher;
 import pl.failmasters.site.user.UserDto;
 
 public class UserDao implements Dao<UserDto> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Connector.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
 	private final ConnectionData data = getConnectionData();
 
+	public boolean login(String login, String password) {
+		String query = "SELECT * FROM users WHERE login=? AND password=?";
+		Connection connection = ConnectionFactory.getConnection(data);
+
+		try (PreparedStatement stmt = connection.prepareStatement(query);) {
+
+			stmt.setString(1, login);
+			stmt.setString(2, new PasswordHasher(password).hash());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				LOGGER.info("<< Authentication sucessful.");
+				return true;
+
+			} else {
+				LOGGER.warn("<< Incorrect authentication!");
+				return false;
+			}
+
+		} catch (SQLException ex) {
+			LOGGER.error("<< SQLException thrown while getting user by login and password: {}", ex.getMessage());
+		}
+
+		return false;
+	}
+
 	@Override
-	public UserDto getUser(final String login) {
+	public UserDto get(final int id) {
+		String query = "SELECT * FROM users WHERE id=?";
+		Connection connection = ConnectionFactory.getConnection(data);
+
+		try (PreparedStatement stmt = connection.prepareStatement(query);) {
+
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				return new UserDto(rs);
+			}
+
+		} catch (SQLException ex) {
+			LOGGER.error("<< SQLException thrown while getting user by id: {}", ex.getMessage());
+		}
+
+		return null;
+	}
+
+	@Override
+	public UserDto get(final String login) {
 		String query = "SELECT * FROM users WHERE login=?";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -44,7 +88,6 @@ public class UserDao implements Dao<UserDto> {
 		return null;
 	}
 
-	@Override
 	public UserDto getUserByLoginAndPassword(String login, String pass) {
 		String query = "SELECT * FROM users WHERE login=? AND password=?";
 		Connection connection = ConnectionFactory.getConnection(data);
@@ -67,7 +110,7 @@ public class UserDao implements Dao<UserDto> {
 	}
 
 	@Override
-	public Set<UserDto> getAllUsers() {
+	public Set<UserDto> getAll() {
 		String query = "SELECT * FROM users ORDER BY id";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -87,7 +130,7 @@ public class UserDao implements Dao<UserDto> {
 	}
 
 	@Override
-	public boolean insertUser(UserDto user) {
+	public boolean insert(UserDto user) {
 		String query = "INSERT INTO users (name, surename, login, email, password) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -113,7 +156,7 @@ public class UserDao implements Dao<UserDto> {
 	}
 
 	@Override
-	public boolean updateUser(UserDto user) {
+	public boolean update(UserDto user) {
 		String query = "UPDATE users SET name=?, surename=?, email=?, password=? WHERE login=?";
 
 		Connection connection = ConnectionFactory.getConnection(data);
@@ -140,7 +183,7 @@ public class UserDao implements Dao<UserDto> {
 	}
 
 	@Override
-	public boolean deleteUser(String login) {
+	public boolean delete(String login) {
 		String query = "DELETE FROM users WHERE login=?";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -155,25 +198,55 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while deleting user: {}", ex.getMessage());
+			LOGGER.error("<< SQLException thrown while deleting user by login: {}", ex.getMessage());
 		}
 
 		return false;
 	}
 
-	private ConnectionData getConnectionData() {
-		Properties props = new Properties();
-		InputStream inputStream = UserDao.class.getResourceAsStream("/db.properties");
+	@Override
+	public boolean delete(int id) {
+		String query = "DELETE FROM users WHERE id=?";
+		Connection connection = ConnectionFactory.getConnection(data);
 
-		try {
-			props.load(inputStream);
+		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
-		} catch (IOException e) {
-			LOGGER.error("<< IOException thrown while getting props: {}", e.getMessage());
+			stmt.setInt(1, id);
 
+			int affectedRows = stmt.executeUpdate();
+
+			if (affectedRows == 1) {
+				return true;
+			}
+
+		} catch (SQLException ex) {
+			LOGGER.error("<< SQLException thrown while deleting user by id: {}", ex.getMessage());
 		}
 
-		return new ConnectionData(props);
+		return false;
+	}
 
+	@Override
+	public int getIdByName(String login) {
+		String query = "SELECT * FROM users WHERE login=?";
+		Connection connection = ConnectionFactory.getConnection(data);
+
+		try (PreparedStatement stmt = connection.prepareStatement(query);) {
+
+			stmt.setString(1, login);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				UserDto user = new UserDto(rs);
+
+				return user.getId();
+			}
+
+		} catch (SQLException ex) {
+			LOGGER.error("<< SQLException thrown while getting userId by login: {}", ex.getMessage());
+		}
+
+		LOGGER.warn("<< No user with login {} found! Returning -1", login);
+		return -1;
 	}
 }
