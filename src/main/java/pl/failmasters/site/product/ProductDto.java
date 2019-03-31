@@ -6,13 +6,35 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@EqualsAndHashCode
 public class ProductDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDto.class);
 
+	@Getter(value = AccessLevel.PUBLIC)
+	@Setter(value = AccessLevel.PUBLIC)
 	int id;
+
+	@Getter(value = AccessLevel.PUBLIC)
+	@Setter(value = AccessLevel.PUBLIC)
 	String name;
+
+	@Getter(value = AccessLevel.PUBLIC)
+	@Setter(value = AccessLevel.PUBLIC)
 	String desc;
+
+	@Getter(value = AccessLevel.PUBLIC)
+	@Setter(value = AccessLevel.PUBLIC)
 	int quantity;
+
+	@Getter(value = AccessLevel.PUBLIC)
+	@Setter(value = AccessLevel.PUBLIC)
 	String image;
 
 	public ProductDto(int id, String name, String desc, int quantity, String image) {
@@ -47,115 +69,8 @@ public class ProductDto {
 		}
 	}
 
-	public int getId() {
-		return id;
-	}
+	public ProductDto() {
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ProductDto [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", desc=");
-		builder.append(desc);
-		builder.append(", quantity=");
-		builder.append(quantity);
-		builder.append(", image=");
-		builder.append(image);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((desc == null) ? 0 : desc.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + quantity;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		ProductDto other = (ProductDto) obj;
-		if (desc == null) {
-			if (other.desc != null) {
-				return false;
-			}
-		} else if (!desc.equals(other.desc)) {
-			return false;
-		}
-		if (id != other.id) {
-			return false;
-		}
-		if (image == null) {
-			if (other.image != null) {
-				return false;
-			}
-		} else if (!image.equals(other.image)) {
-			return false;
-		}
-		if (name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!name.equals(other.name)) {
-			return false;
-		}
-		if (quantity != other.quantity) {
-			return false;
-		}
-		return true;
 	}
 
 }
