@@ -1,4 +1,4 @@
-package pl.failmasters.site;
+package pl.failmasters.site.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,12 +10,21 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-public class UserDaoImpl implements UserDao {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import pl.failmasters.site.Connector;
+import pl.failmasters.site.connection.ConnectionData;
+import pl.failmasters.site.connection.ConnectionFactory;
+import pl.failmasters.site.user.UserDto;
+
+public class UserDao implements Dao<UserDto> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(Connector.class);
 	private final ConnectionData data = getConnectionData();
 
 	@Override
-	public User getUser(final String login) {
+	public UserDto getUser(final String login) {
 		String query = "SELECT * FROM users WHERE login=?";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -25,18 +34,18 @@ public class UserDaoImpl implements UserDao {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				return new User(rs);
+				return new UserDto(rs);
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while getting user by login!");
 		}
 
 		return null;
 	}
 
 	@Override
-	public User getUserByLoginAndPassword(String login, String pass) {
+	public UserDto getUserByLoginAndPassword(String login, String pass) {
 		String query = "SELECT * FROM users WHERE login=? AND password=?";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -47,38 +56,38 @@ public class UserDaoImpl implements UserDao {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				return new User(rs);
+				return new UserDto(rs);
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while getting user by login and password!");
 		}
 
 		return null;
 	}
 
 	@Override
-	public Set<User> getAllUsers() {
+	public Set<UserDto> getAllUsers() {
 		String query = "SELECT * FROM users ORDER BY id";
 		Connection connection = ConnectionFactory.getConnection(data);
 
-		Set<User> users = new HashSet<>();
+		Set<UserDto> users = new HashSet<>();
 
 		try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery();) {
 
 			while (rs.next()) {
-				users.add(new User(rs));
+				users.add(new UserDto(rs));
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while getting all users!");
 		}
 
 		return users;
 	}
 
 	@Override
-	public boolean insertUser(User user) {
+	public boolean insertUser(UserDto user) {
 		String query = "INSERT INTO users (name, surename, login, email, password) VALUES (?, ?, ?, ?, ?)";
 		Connection connection = ConnectionFactory.getConnection(data);
 
@@ -97,14 +106,14 @@ public class UserDaoImpl implements UserDao {
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while inserting user!");
 		}
 
 		return false;
 	}
 
 	@Override
-	public boolean updateUser(User user) {
+	public boolean updateUser(UserDto user) {
 		String query = "UPDATE users SET name=?, surename=?, email=?, password=? WHERE login=?";
 
 		Connection connection = ConnectionFactory.getConnection(data);
@@ -124,7 +133,7 @@ public class UserDaoImpl implements UserDao {
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while updating user!");
 		}
 
 		return false;
@@ -146,22 +155,22 @@ public class UserDaoImpl implements UserDao {
 			}
 
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			LOGGER.error("<< SQLException thrown while deleting user!");
 		}
 
 		return false;
 	}
 
 	private ConnectionData getConnectionData() {
-		InputStream inputStream = getClass().getResourceAsStream("db.properties");
 		Properties props = new Properties();
+		InputStream inputStream = UserDao.class.getResourceAsStream("/db.properties");
 
 		try {
 			props.load(inputStream);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("<< IOException thrown while getting props!");
+
 		}
 
 		return new ConnectionData(props);

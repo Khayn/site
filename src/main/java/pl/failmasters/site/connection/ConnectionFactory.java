@@ -1,4 +1,4 @@
-package pl.failmasters.site;
+package pl.failmasters.site.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

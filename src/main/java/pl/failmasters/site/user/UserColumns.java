@@ -1,6 +1,6 @@
-package pl.failmasters.site;
+package pl.failmasters.site.user;
 
-public enum Columns {
+public enum UserColumns {
 
 	ID("id"), NAME("name"), SURENAME("surename"), LOGIN("login"), EMAIL("email"), PASSWORD("password");
 
@@ -10,7 +10,7 @@ public enum Columns {
 		return dbColumnName;
 	}
 
-	Columns(String dbColumnName) {
+	UserColumns(String dbColumnName) {
 		this.dbColumnName = dbColumnName;
 	}
 }

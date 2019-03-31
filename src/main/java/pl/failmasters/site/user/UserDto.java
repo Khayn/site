@@ -1,20 +1,20 @@
-package pl.failmasters.site;
+package pl.failmasters.site.user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class User {
+public class UserDto {
 
-	public User(ResultSet rs) throws SQLException {
-		this.id = rs.getInt(Columns.ID.getDbColumnName());
-		this.name = rs.getString(Columns.NAME.getDbColumnName());
-		this.surename = rs.getString(Columns.SURENAME.getDbColumnName());
-		this.email = rs.getString(Columns.EMAIL.getDbColumnName());
-		this.password = rs.getString(Columns.PASSWORD.getDbColumnName());
-		this.login = rs.getString(Columns.LOGIN.getDbColumnName());
+	public UserDto(ResultSet rs) throws SQLException {
+		this.id = rs.getInt(UserColumns.ID.getDbColumnName());
+		this.name = rs.getString(UserColumns.NAME.getDbColumnName());
+		this.surename = rs.getString(UserColumns.SURENAME.getDbColumnName());
+		this.email = rs.getString(UserColumns.EMAIL.getDbColumnName());
+		this.password = rs.getString(UserColumns.PASSWORD.getDbColumnName());
+		this.login = rs.getString(UserColumns.LOGIN.getDbColumnName());
 	}
 
-	public User(String name, String surename, String email, String password, String login) {
+	public UserDto(String name, String surename, String email, String password, String login) {
 		super();
 		this.name = name;
 		this.surename = surename;
@@ -23,7 +23,7 @@ public class User {
 		this.login = login;
 	}
 
-	public User(Integer id, String name, String surename, String email, String password, String login) {
+	public UserDto(Integer id, String name, String surename, String email, String password, String login) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,7 +33,7 @@ public class User {
 		this.login = login;
 	}
 
-	public User() {
+	public UserDto() {
 
 	}
 
