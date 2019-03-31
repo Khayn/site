@@ -4,7 +4,7 @@ CREATE TABLE users (
      surename CHAR(30) NOT NULL,
      login CHAR(30) NOT NULL,
      email CHAR(30) NOT NULL,
-     password CHAR(30) NOT NULL,
+     password CHAR(128) NOT NULL,
      PRIMARY KEY (id)
 );
 

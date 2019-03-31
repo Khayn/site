@@ -38,7 +38,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while getting user by login!");
+			LOGGER.error("<< SQLException thrown while getting user by login: {}", ex.getMessage());
 		}
 
 		return null;
@@ -60,7 +60,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while getting user by login and password!");
+			LOGGER.error("<< SQLException thrown while getting user by login and password: {}", ex.getMessage());
 		}
 
 		return null;
@@ -80,7 +80,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while getting all users!");
+			LOGGER.error("<< SQLException thrown while getting all users: {}", ex.getMessage());
 		}
 
 		return users;
@@ -106,7 +106,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while inserting user!");
+			LOGGER.error("<< SQLException thrown while inserting user: {}", ex.getMessage());
 		}
 
 		return false;
@@ -133,7 +133,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while updating user!");
+			LOGGER.error("<< SQLException thrown while updating user: {}", ex.getMessage());
 		}
 
 		return false;
@@ -155,7 +155,7 @@ public class UserDao implements Dao<UserDto> {
 			}
 
 		} catch (SQLException ex) {
-			LOGGER.error("<< SQLException thrown while deleting user!");
+			LOGGER.error("<< SQLException thrown while deleting user: {}", ex.getMessage());
 		}
 
 		return false;
@@ -169,7 +169,7 @@ public class UserDao implements Dao<UserDto> {
 			props.load(inputStream);
 
 		} catch (IOException e) {
-			LOGGER.error("<< IOException thrown while getting props!");
+			LOGGER.error("<< IOException thrown while getting props: {}", e.getMessage());
 
 		}
 

@@ -19,7 +19,7 @@ public class UserDto {
 		this.name = name;
 		this.surename = surename;
 		this.email = email;
-		this.password = password;
+		this.password = new PasswordHasher(password).hash();
 		this.login = login;
 	}
 
@@ -29,7 +29,7 @@ public class UserDto {
 		this.name = name;
 		this.surename = surename;
 		this.email = email;
-		this.password = password;
+		this.password = new PasswordHasher(password).hash();
 		this.login = login;
 	}
 
