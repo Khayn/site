@@ -17,9 +17,14 @@ public class Connector {
 
 	public static void main(String[] args) {
 
+		// TODO
+		// Delombok - fix src packages
+
 		/**
-		 * those are basically integration tests and form of a use case
+		 * those are basically integration tests and form of a use case<br/>
+		 * disclaimer: product:name and user:login are unique in db
 		 */
+
 		StopWatch watch = new StopWatch();
 		watch.start();
 		LOGGER.info("<< Started running.");
