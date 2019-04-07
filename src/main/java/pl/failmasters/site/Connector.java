@@ -13,8 +13,8 @@ import pl.failmasters.site.user.UserDto;
 
 public class Connector {
 
-	private static final String TEST_PRODUCT_NAME_AFTER_UPDATE = "odkurzacz SSACZ-200 XL";
 	private static final String TEST_PRODUCT_NAME = "odkurzacz SSACZ-200";
+	private static final String TEST_PRODUCT_NAME_AFTER_UPDATE = "odkurzacz SSACZ-200 XL";
 	private static final String TEST_USER_LOGIN = "miszczu";
 	private static final String TEST_USER_PASSWORD = "pass123";
 
