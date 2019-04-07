@@ -1,0 +1,18 @@
+SonarQube Scanner - analysis properties
+
+# Required metadata
+sonar.projectKey=pl.failmasters.site
+sonar.projectName=pl.failmasters.site
+sonar.projectVersion=1.0
+
+# Comma-separated paths to directories with sources (required)
+sonar.sources=target/delombok
+sonar.java.binaries=target/classes
+sonar.exclusions=target/site
+sonar.java.libraries=target/*.jar
+
+# Language
+sonar.language=java
+
+# Encoding of the source files
+sonar.sourceEncoding=UTF-8
