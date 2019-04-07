@@ -19,6 +19,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<src.dir>src/main/java</src.dir>
 	</properties>
 
 	<dependencies>
@@ -210,6 +212,7 @@
 
 
 			<!-- https://stackoverflow.com/questions/52362413/create-and-install-de-lomboked-source-jar-in-maven -->
+			<!-- https://stackoverflow.com/questions/25059643/sonarqube-lombok-configuration -->
 			<plugin>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>
@@ -220,6 +223,17 @@
 						<goals>
 							<goal>delombok</goal>
 						</goals>
+					</execution>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+						<configuration>
+							<addOutputDirectory>false</addOutputDirectory>
+							<sourceDirectory>src/main/java</sourceDirectory>
+						</configuration>
+						<id>delombok-sources</id>
 					</execution>
 				</executions>
 				<configuration>
@@ -363,6 +377,42 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<!-- we have to use this profile to analyse code with sonar until https://jira.codehaus.org/browse/MSONAR-70 is fixed ! -->
+			<id>sonar</id>
+			<properties>
+				<src.dir>target/generated-sources/delombok</src.dir>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok-maven-plugin</artifactId>
+						<version>${lombok-plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>delombok</goal>
+								</goals>
+								<configuration>
+									<addOutputDirectory>true</addOutputDirectory>
+									<sourceDirectory>src/main/java</sourceDirectory>
+								</configuration>
+								<id>delombok-sonar</id>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sonar-maven-plugin</artifactId>
+						<version>2.2</version>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 </project>
