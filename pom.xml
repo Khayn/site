@@ -358,6 +358,19 @@
 
 	</build>
 
+	<!-- release do Nexusa po zakończonej konfiguracji
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>http://khayn.synology.me:9091/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://khayn.synology.me:9091/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+-->
+
 	<profiles>
 
 		<!-- https://www.baeldung.com/maven-release-nexus -->
