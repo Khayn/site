@@ -71,7 +71,7 @@ public class ProductDao implements Dao<ProductDto> {
 			stmt.setString(1, product.getName());
 			stmt.setString(2, product.getDesc());
 			stmt.setInt(3, product.getQuantity());
-			stmt.setString(4, product.getImage());
+			stmt.setBinaryStream(4, product.getImage());
 
 			int affectedRows = stmt.executeUpdate();
 
@@ -97,7 +97,7 @@ public class ProductDao implements Dao<ProductDto> {
 			stmt.setString(1, product.getName());
 			stmt.setString(2, product.getDesc());
 			stmt.setInt(3, product.getQuantity());
-			stmt.setString(4, product.getImage());
+			stmt.setBinaryStream(4, product.getImage());
 			stmt.setInt(5, product.getId());
 
 			int affectedRows = stmt.executeUpdate();

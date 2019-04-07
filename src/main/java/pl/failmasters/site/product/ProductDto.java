@@ -1,5 +1,6 @@
 package pl.failmasters.site.product;
 
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,9 +19,9 @@ public class ProductDto {
 	private String name;
 	private String desc;
 	private int quantity;
-	private String image;
+	private InputStream image;
 
-	public ProductDto(int id, String name, String desc, int quantity, String image) {
+	public ProductDto(int id, String name, String desc, int quantity, InputStream image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,12 +30,39 @@ public class ProductDto {
 		this.image = image;
 	}
 
-	public ProductDto(String name, String desc, int quantity, String image) {
+	public ProductDto(String name, String desc, int quantity, InputStream image) {
 		super();
 		this.name = name;
 		this.desc = desc;
 		this.quantity = quantity;
 		this.image = image;
+	}
+
+	public ProductDto(String name, String desc, int quantity, String imagePath) {
+		super();
+
+		this.name = name;
+		this.desc = desc;
+		this.quantity = quantity;
+		this.image = getFileInputStream(imagePath);
+	}
+
+	public ProductDto(int id, String name, String desc, int quantity, String imagePath) {
+		super();
+
+		this.id = id;
+		this.name = name;
+		this.desc = desc;
+		this.quantity = quantity;
+		this.image = getFileInputStream(imagePath);
+	}
+
+	public static ProductDto newProductDto(int id, String name, String desc, int quantity, String imagePath) {
+		ProductDto dto = new ProductDto(name, desc, quantity, imagePath);
+		dto.setId(id);
+
+		return dto;
+
 	}
 
 	public ProductDto(ResultSet rs) {
@@ -44,7 +72,7 @@ public class ProductDto {
 			this.name = rs.getString(ProductColumns.NAME.getDbColumnName());
 			this.desc = rs.getString(ProductColumns.DESCRIPTION.getDbColumnName());
 			this.quantity = rs.getInt(ProductColumns.QUANTITY.getDbColumnName());
-			this.image = rs.getString(ProductColumns.IMAGE.getDbColumnName());
+			this.image = rs.getBinaryStream(ProductColumns.IMAGE.getDbColumnName());
 
 		} catch (SQLException e) {
 			LOGGER.error("<< SQLException thrown while getting constructing ProductDto: {}, ResultSet: {}",
@@ -56,4 +84,10 @@ public class ProductDto {
 
 	}
 
+	private InputStream getFileInputStream(String path) {
+		InputStream inputStream = ProductDto.class.getResourceAsStream("/images/" + path);
+
+		LOGGER.info("<< Got product image input stream: {}", inputStream);
+		return inputStream;
+	}
 }
