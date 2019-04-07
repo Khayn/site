@@ -143,14 +143,15 @@ public class ProductDao implements Dao<ProductDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setString(1, name);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			while (rs.next()) {
-				ProductDto product = new ProductDto(rs);
+				while (rs.next()) {
+					ProductDto product = new ProductDto(rs);
 
-				return product.getId();
+					return product.getId();
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting productId by name: {}", ex.getMessage());
 		}
@@ -167,12 +168,13 @@ public class ProductDao implements Dao<ProductDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setString(1, name);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				return new ProductDto(rs);
+				if (rs.next()) {
+					return new ProductDto(rs);
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting product by name: {}", ex.getMessage());
 		}

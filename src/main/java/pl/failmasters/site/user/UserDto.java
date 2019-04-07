@@ -23,15 +23,10 @@ public class UserDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDao.class);
 
 	private Integer id;
-
 	private String name;
-
 	private String surename;
-
 	private String email;
-
 	private String password;
-
 	private String login;
 
 	public UserDto(ResultSet rs) {

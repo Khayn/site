@@ -22,13 +22,9 @@ public class ProductDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDto.class);
 
 	private int id;
-
 	private String name;
-
 	private String desc;
-
 	private int quantity;
-
 	private String image;
 
 	public ProductDto(int id, String name, String desc, int quantity, String image) {

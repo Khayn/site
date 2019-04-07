@@ -28,17 +28,18 @@ public class UserDao implements Dao<UserDto> {
 
 			stmt.setString(1, login);
 			stmt.setString(2, new PasswordHasher(password).hash());
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				LOGGER.info("<< Authentication sucessful.");
-				return true;
+				if (rs.next()) {
+					LOGGER.info("<< Authentication sucessful.");
+					return true;
 
-			} else {
-				LOGGER.warn("<< Incorrect authentication!");
-				return false;
+				} else {
+					LOGGER.warn("<< Incorrect authentication!");
+					return false;
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting user by login and password: {}", ex.getMessage());
 		}
@@ -54,12 +55,13 @@ public class UserDao implements Dao<UserDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				return new UserDto(rs);
+				if (rs.next()) {
+					return new UserDto(rs);
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting user by id: {}", ex.getMessage());
 		}
@@ -75,12 +77,13 @@ public class UserDao implements Dao<UserDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setString(1, login);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				return new UserDto(rs);
+				if (rs.next()) {
+					return new UserDto(rs);
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting user by login: {}", ex.getMessage());
 		}
@@ -96,12 +99,13 @@ public class UserDao implements Dao<UserDto> {
 
 			stmt.setString(1, login);
 			stmt.setString(2, pass);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				return new UserDto(rs);
+				if (rs.next()) {
+					return new UserDto(rs);
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting user by login and password: {}", ex.getMessage());
 		}
@@ -234,14 +238,15 @@ public class UserDao implements Dao<UserDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setString(1, login);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			while (rs.next()) {
-				UserDto user = new UserDto(rs);
+				while (rs.next()) {
+					UserDto user = new UserDto(rs);
 
-				return user.getId();
+					return user.getId();
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting userId by login: {}", ex.getMessage());
 		}
