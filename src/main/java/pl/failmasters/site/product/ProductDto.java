@@ -6,17 +6,10 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@ToString
-@EqualsAndHashCode
-@Setter(value = AccessLevel.PUBLIC)
-@Getter(value = AccessLevel.PUBLIC)
+@Data
 @Builder
 public class ProductDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDto.class);
