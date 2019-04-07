@@ -27,12 +27,13 @@ public class ProductDao implements Dao<ProductDto> {
 		try (PreparedStatement stmt = connection.prepareStatement(query);) {
 
 			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
+			try (ResultSet rs = stmt.executeQuery();) {
 
-			if (rs.next()) {
-				return new ProductDto(rs);
+				if (rs.next()) {
+					return new ProductDto(rs);
+				}
+
 			}
-
 		} catch (SQLException ex) {
 			LOGGER.error("<< SQLException thrown while getting product by id: {}", ex.getMessage());
 		}

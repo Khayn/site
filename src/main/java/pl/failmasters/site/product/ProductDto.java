@@ -15,29 +15,21 @@ import lombok.ToString;
 
 @ToString
 @EqualsAndHashCode
+@Setter(value = AccessLevel.PUBLIC)
+@Getter(value = AccessLevel.PUBLIC)
 @Builder
 public class ProductDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDto.class);
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
-	int id;
+	private int id;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
-	String name;
+	private String name;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
-	String desc;
+	private String desc;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
-	int quantity;
+	private int quantity;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
-	String image;
+	private String image;
 
 	public ProductDto(int id, String name, String desc, int quantity, String image) {
 		super();

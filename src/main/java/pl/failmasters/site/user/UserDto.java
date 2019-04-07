@@ -16,32 +16,22 @@ import pl.failmasters.site.dao.ProductDao;
 
 @ToString
 @EqualsAndHashCode
+@Setter(value = AccessLevel.PUBLIC)
+@Getter(value = AccessLevel.PUBLIC)
 @Builder
 public class UserDto {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDao.class);
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private Integer id;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private String name;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private String surename;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private String email;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private String password;
 
-	@Getter(value = AccessLevel.PUBLIC)
-	@Setter(value = AccessLevel.PUBLIC)
 	private String login;
 
 	public UserDto(ResultSet rs) {

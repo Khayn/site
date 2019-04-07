@@ -1,11 +1,14 @@
 package pl.failmasters.site.user;
 
 import org.hamcrest.text.IsEqualIgnoringCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName(value = "Testy hashera haseł")
 public class PasswordHasherTest {
 
 	@Test
+	@DisplayName(value = "Powinien zwrócić odpowiedni hash hasła")
 	public void shouldReturnCorrectHash() {
 		// given + when
 		PasswordHasher hasher = new PasswordHasher("password123");
