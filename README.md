@@ -1,6 +1,6 @@
 <h3>Repozytorium do nauki JDBC i JSP</h3>
-W założeniu ma to być prymitywna forma "sklepu"  - komunikacja z bazą danych, logowanie/rejestracja użytkowników, zamawianie produktów.
-Połączone z nauką stawiania własnego środowiska deweloperskiego - Jenkins, Sonarqube, Tomcat
+W założeniu ma to być prymitywna forma "sklepu"  - komunikacja z bazą danych, logowanie/rejestracja użytkowników, zamawianie produktów.<br/>
+Połączone z nauką stawiania własnego środowiska deweloperskiego - Jenkins, Sonarqube, Tomcat, Nexus
 
 <br/><br/><h4>Linki</h4>
 <ul>
