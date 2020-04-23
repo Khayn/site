@@ -1,0 +1,8 @@
+autoEnabled=true
+eclipse.preferences.version=1
+extraProperties=
+fileExclusions=
+idePrefixKey=src/main/java
+projectKey=pl.failmasters.site
+serverId=ds218
+sqPrefixKey=target/delombok
