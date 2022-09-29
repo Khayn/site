@@ -140,7 +140,7 @@
 
 			<!-- https://www.baeldung.com/sonar-qube
 			mvn sonar:sonar \
-			-Dsonar.host.url=http://khayn.synology.me:9000 \
+			-Dsonar.host.url=http://192.168.100.104:9000 \
 			-Dsonar.login=794eee608286e7e3a452e5d8b68bd834daab9137
 			-->
 			<plugin>
